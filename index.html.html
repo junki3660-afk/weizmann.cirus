@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>와이즈만 전염병 게임</title>
+<style>
+    body { font-family: Arial, sans-serif; background:#f0f0f0; padding:20px; }
+    h1 { text-align:center; }
+    .section { margin-bottom:20px; padding:15px; background:#fff; border-radius:8px; }
+    input, select, textarea { width: 100%; margin-top:5px; margin-bottom:10px; padding:5px; }
+    button { padding:10px 20px; font-size:16px; display:block; margin:auto; }
+    #result { white-space: pre-wrap; background:#e0e0e0; padding:15px; border-radius:8px; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<h1>와이즈만 전염병 게임</h1>
+
+<div class="section">
+    <h2>A팀 정보 입력</h2>
+    <input id="aTeamName" placeholder="A팀 이름 입력">
+    <input id="aTeamMembers" placeholder="팀원 이름/직업 (예: 지민(과학자), 태윤(연구원))">
+    <textarea id="aVirus" placeholder="A팀 바이러스 특성 입력 (예: RNA, 전파력 7, 잠복기 6, 치명률 3, 전파경로 다양성 4)"></textarea>
+</div>
+
+<div class="section">
+    <h2>B팀 정보 입력</h2>
+    <input id="bTeamName" placeholder="B팀 이름 입력">
+    <input id="bTeamMembers" placeholder="팀원 이름/직업 (예: 기혜(의사), 수현(간호사))">
+    <textarea id="bVirus" placeholder="B팀 바이러스 특성 입력 (예: DNA, 전파력 4, 잠복기 3, 치명률 9, 전파경로 다양성 4)"></textarea>
+</div>
+
+<div class="section">
+    <h2>A팀 대응 전략</h2>
+    <textarea id="aDefense" placeholder="A팀의 B팀 바이러스 대응 전략 입력"></textarea>
+</div>
+
+<div class="section">
+    <h2>B팀 대응 전략</h2>
+    <textarea id="bDefense" placeholder="B팀의 A팀 바이러스 대응 전략 입력"></textarea>
+</div>
+
+<button onclick="runGame()">게임 시작</button>
+
+<div id="result"></div>
+
+<script>
+function runGame() {
+    // 입력값 가져오기
+    const aTeamName = document.getElementById('aTeamName').value || "A팀";
+    const bTeamName = document.getElementById('bTeamName').value || "B팀";
+    const aMembers = document.getElementById('aTeamMembers').value || "지민(과학자), 태윤(연구원)";
+    const bMembers = document.getElementById('bTeamMembers').value || "기혜(의사), 수현(간호사)";
+    const aVirus = document.getElementById('aVirus').value || "RNA, 전파력 6, 잠복기 6, 치명률 4, 전파경로 4";
+    const bVirus = document.getElementById('bVirus').value || "DNA, 전파력 4, 잠복기 4, 치명률 8, 전파경로 4";
+    const aDefense = document.getElementById('aDefense').value || "백신, 치료, 병원 인프라 강화";
+    const bDefense = document.getElementById('bDefense').value || "격리, 모니터링, 위치 최적화";
+
+    // 랜덤 감염자 계산 (전략 반영 간단 시뮬레이션)
+    const aInfected = Math.floor(Math.random() * 600000) + 50000;
+    const bInfected = Math.floor(Math.random() * 600000) + 50000;
+
+    // 승리팀 결정
+    const winner = aInfected < bInfected ? aTeamName : bTeamName;
+
+    // 결과 스토리 생성
+    const story = `=== 게임 결과 ===\n\n` +
+                  `${aTeamName} 바이러스: ${aVirus}\n${bTeamName} 대응 전략: ${bDefense}\n\n` +
+                  `${bTeamName} 바이러스: ${bVirus}\n${aTeamName} 대응 전략: ${aDefense}\n\n` +
+                  `예상 감염자 수:\n- ${aTeamName}: ${aInfected}명\n- ${bTeamName}: ${bInfected}명\n\n` +
+                  `🏆 최종 승리: ${winner}\n\n` +
+                  `--- 스토리 ---\n` +
+                  `도심은 긴장감으로 가득 찼다. ${aMembers}의 ${aTeamName}와 ${bMembers}의 ${bTeamName}는 서로의 바이러스를 퍼뜨리고 막으며 숨막히는 전략 싸움을 벌였다.\n` +
+                  `${aTeamName}의 바이러스가 도심 곳곳에 퍼졌고, ${bTeamName}의 대응 전략이 효과를 발휘하며 감염 확산을 제한했다.\n` +
+                  `결국 ${winner}가 도시를 지켜낸 승리의 팀으로 기록되었다.`;
+
+    document.getElementById('result').innerText = story;
+}
+</script>
+
+</body>
+</html>
